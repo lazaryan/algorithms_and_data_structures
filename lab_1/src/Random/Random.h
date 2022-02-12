@@ -1,0 +1,135 @@
+#ifndef __RANDOM_RANDOM__
+#define __RANDOM_RANDOM__
+
+#include <iostream>
+#include <vector>
+#include <random>
+#include <math>
+
+namespace Random {
+	/*
+	 *  ласс дл€ получени€ случайного элемента исход€ из его веро€тности выподани€
+	 * ≈сли веро€тность всех событий != 1, то она будет приведена к данному значению автоматически
+	 */
+	template <typename T>
+	class IRandom {
+	public:
+		/*
+		 * ћетод дл€ загрузки данных в класс и дальнейша€ их обработка
+		 * „исло элементов и их вер€тностей должны совпадать
+		 * 
+		 * @params
+		 * - data - массив данных, которые будут возвращатьс€ случайным образом
+		 * - statements - массив веро€тностей выпадани€ каждого элемента
+		 * @return bool - успешность занесени€ данных
+		 */
+		virtual bool set_data(std::vector<T> data, std::vector<double> statements) = 0;
+
+		// получить, сколько элементов в выборке
+		virtual size_t get_size_database() = 0;
+
+		/*
+		 * ћетод дл€ получени€ случайного элемента
+		 * ƒанный метод можно вызывть только после загрузки данных, иначе будет возвращен nullptr
+		 */
+		virtual T* random() = 0;
+	private:
+		/*
+		 * ‘ункци€ дл€ приведени€ массива веро€тностей к 1
+		 * ≈сли все веро€тности в сумме дают 1, то с ними ничего не происходит
+		 *
+		 * »наче вычисл€етс€ общее отклонение = (persentage^-1) * 0.1
+		 * » дальше все веро€тности умножаютс€ на это отклонение
+		 * ≈сли сумма < 1, то это отклонение > 1 и наоборот
+		 * ¬ итоге так мы получаем 1 в сумме всех веро€тностей
+		 */
+		virtual std::vector<double> prepare_statements(std::vector<double> statements) = 0;
+	};
+
+	template <typename T>
+	class Random: IRandom<T> {
+	public:
+		Random()
+		{
+			std::random_device rd;
+
+			this->mersen_random_generator = std::mt19937(rd());
+		}
+
+		bool set_data(std::vector<T> data, std::vector<double> statements)
+		{
+			if (data.size() != statements.size())
+			{
+				std::cerr << "ERROR::Random => size data != statements" << std::endl;
+
+				return false;
+			}
+
+			this->database = data;
+			this->statements = this->prepare_statements(statements);
+			
+			this->is_load_data = true;
+
+			return true;
+		}
+
+		T* random()
+		{
+			if (!this->is_load_data)
+			{
+				std::cerr << "ERROR::Random => not get random item after load dataset" << std::endl;
+
+				return nullptr;
+			}
+
+			const double random_value = double(this->mersen_random_generator()) / RAND_MAX;
+
+			int statement = 0;
+
+			for (int i = 0; i < this->statements.size(); i++)
+			{
+				statement += this->statements[i];
+
+				if (random_value < statement)
+				{
+					return &this->statements[i];
+				}
+			}
+
+			return &this->statements.end();
+		}
+
+	private:
+		bool is_load_data = false;
+
+		std::vector<T> database;
+		std::vector<double> statements;
+		std::mt19937 mersen_random_generator;
+
+		std::vector<double> prepare_statements(std::vector<double> statements)
+		{
+			const double persentage = 0;
+
+			for (std::vector<double>::iterator it = statements.begin(); it != statements.end(); ++it)
+			{
+				persentage += *it;
+			}
+
+			if (persentage == 1.0)
+			{
+				return statements;
+			}
+
+			const double offset = std::pow(persentage, -1) * 0.1;
+
+			for (size_t i = 0; i < statements.size(); i++)
+			{
+				statements[i] *= offset;
+			}
+
+			return statements;
+		}
+	};
+}
+
+#endif // !__RANDOM_RANDOM__
