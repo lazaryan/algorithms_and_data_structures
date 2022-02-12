@@ -53,6 +53,16 @@ namespace CSV {
 
 		bool is_open() const { return this->file_stream.is_open(); }
 
+		bool is_reading_all() const { return !this->file_stream.is_open() || this->file_stream.eof(); }
+
+		void close_file()
+		{
+			if (this->file_stream.is_open())
+			{
+				this->file_stream.close();
+			}
+		}
+
 		T* next()
 		{
 			if (!this->file_stream.eof()) {

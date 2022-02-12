@@ -10,6 +10,7 @@ namespace Databases {
 		int id;
 		int product_type_id;
 		std::string name;
+		int statement_id;
 		double price;
 	};
 
@@ -24,7 +25,7 @@ namespace Databases {
 	private:
 		Product* line_reader(std::vector<std::string> item)
 		{
-			if (item.size() != 4) {
+			if (item.size() != 5) {
 				return nullptr;
 			}
 
@@ -32,7 +33,8 @@ namespace Databases {
 				std::stoi(item[0]),
 				std::stoi(item[1]),
 				item[2],
-				std::atof(item[3].c_str()),
+				std::stoi(item[3]),
+				std::atof(item[4].c_str()),
 			};
 
 			return new_item;

@@ -2,7 +2,29 @@
 
 ## products.csv
 
-| RowId | ProductTypeId | ProductName | Price |
-| ----- | :-----------: | :----------:| -----:|
-|       |               |             |       |
+Таблица всех продуктов
 
+StatementId -> statements.csv[RowId]
+ProductTypeId -> product_types.csv[RowId]
+
+| RowId | ProductTypeId | ProductName | StatementId | Price  |
+| ----- | :-----------: | :----------:| :---------: | ------:|
+|  int  |     int       |   string    |    int      | double |
+
+## statements.csv
+
+Таблица всех утверждений кассиров и их вроятности встречи
+
+`В сумме они должны давать 1`
+
+| RowId | title  | Probability |
+| ----- | :----: | ----------: |
+|  int  | string |   double    |
+
+## product_types.csv
+
+Таблица типов товаров
+
+| RowId | title  |
+| ----- | -----: |
+|  int  | string |
