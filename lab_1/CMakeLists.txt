@@ -11,6 +11,7 @@ add_executable(${PROJECT_NAME}
     "src/index.cpp"
 	"src/CSV/CSVReader.h"
 	"src/CSV/interfaces.h"
+	"src/Databases/Products.h"
 )
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})

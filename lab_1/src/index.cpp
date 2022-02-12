@@ -1,18 +1,16 @@
 #include <iostream>
-#include <string>
 
-#include "CSV/CSVReader.h"
-
-struct Test {
-	int id;
-	int product_type_id;
-	std::string name;
-	float price;
-};
+#include "Databases/Products.h"
 
 int main()
 {
-	CSV::CSVReader<Test> reader("./database/products.csv");
+	setlocale(LC_ALL, "Russian");
+
+	Databases::Products reader = Databases::Products("./database/products.csv");
+
+	reader.read_all();
+
+	Databases::Product* item = reader[0];
 
 	return 0;
 }

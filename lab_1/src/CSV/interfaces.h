@@ -25,23 +25,23 @@ namespace CSV {
 		// получить колличество строк
 		virtual size_t size() const = 0;
 
-		/*
-		 * функция обработки каждом считанной строки из csv файла
-		 * нужно для того, чтоб каждую строку сразу преобразовать в нужный тип данных
-		 */
-		virtual const void line_reader() = 0;
+		// проверка, что удалось открыть файл
+		virtual bool is_open() const = 0;
 
 		/*
 		 * Функция для считывания очередной строки из CSV файла
 		 * под капотом для каждой стоки вызывает метод line_reader для преобразования в нужную структуру
 		 */
-		virtual T next() = 0;
+		virtual T* next() = 0;
 
 		// функция для считвания всех строк сразу
-		virtual std::vector<T> read_all() = 0;
+		virtual std::vector<T*> read_all() = 0;
 	private:
-		std::vector<T> db;
-		std::ifstream file_stream;
+		/*
+		 * функция обработки каждом считанной строки из csv файла
+		 * нужно для того, чтоб каждую строку сразу преобразовать в нужный тип данных
+		 */
+		virtual T* line_reader(std::vector<std::string>) = 0;
 	};
 }
 
