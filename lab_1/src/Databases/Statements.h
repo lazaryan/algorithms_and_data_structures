@@ -2,6 +2,7 @@
 #define __DATABASES_STATEMENTS__
 
 #include <string>
+#include <algorithm>
 
 #include "../CSV/CSVReader.h"
 
@@ -42,6 +43,8 @@ namespace Databases {
 			if (item.size() != 3) {
 				return nullptr;
 			}
+
+			std::replace(item[2].begin(), item[2].end(), '.', ',');
 
 			Statement* new_item = new Statement {
 				std::stoi(item[0]),

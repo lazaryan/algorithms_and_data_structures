@@ -2,6 +2,7 @@
 #define __DATABASES_PRODUCTS__
 
 #include <string>
+#include <algorithm>
 
 #include "../CSV/CSVReader.h"
 
@@ -60,12 +61,14 @@ namespace Databases {
 				return nullptr;
 			}
 
+			std::replace(item[4].begin(), item[4].end(), '.', ',');
+
 			Product *new_item = new Product {
 				std::stoi(item[0]),
 				std::stoi(item[1]),
 				item[2],
 				std::stoi(item[3]),
-				std::atof(item[4].c_str()),
+				std::stod(item[4].c_str()),
 			};
 
 			return new_item;

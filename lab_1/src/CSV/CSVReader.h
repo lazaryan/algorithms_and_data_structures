@@ -125,7 +125,7 @@ namespace CSV {
 	private:
 		std::ifstream file_stream;
 
-		char separator = ';';
+		char separator = ',';
 
 		virtual T* line_reader(std::vector<std::string> item) { return new T{}; };
 

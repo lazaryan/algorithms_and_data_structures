@@ -1,8 +1,8 @@
-# formats
+п»ї# formats
 
 ## products.csv
 
-Таблица всех продуктов
+РўР°Р±Р»РёС†Р° РІСЃРµС… РїСЂРѕРґСѓРєС‚РѕРІ
 
 StatementId -> statements.csv[RowId]
 ProductTypeId -> product_types.csv[RowId]
@@ -13,9 +13,9 @@ ProductTypeId -> product_types.csv[RowId]
 
 ## statements.csv
 
-Таблица всех утверждений кассиров и их вроятности встречи
+РўР°Р±Р»РёС†Р° РІСЃРµС… СѓС‚РІРµСЂР¶РґРµРЅРёР№ РєР°СЃСЃРёСЂРѕРІ Рё РёС… РІСЂРѕСЏС‚РЅРѕСЃС‚Рё РІСЃС‚СЂРµС‡Рё
 
-`В сумме они должны давать 1`
+`Р’ СЃСѓРјРјРµ РѕРЅРё РґРѕР»Р¶РЅС‹ РґР°РІР°С‚СЊ 1`
 
 | RowId | title  | Probability |
 | ----- | :----: | ----------: |
@@ -23,7 +23,7 @@ ProductTypeId -> product_types.csv[RowId]
 
 ## product_types.csv
 
-Таблица типов товаров
+РўР°Р±Р»РёС†Р° С‚РёРїРѕРІ С‚РѕРІР°СЂРѕРІ
 
 | RowId | title  |
 | ----- | -----: |
