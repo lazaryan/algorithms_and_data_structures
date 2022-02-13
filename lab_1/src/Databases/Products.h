@@ -22,6 +22,24 @@ namespace Databases {
 		Products(std::string path) : BaseClass(path) {};
 		Products(std::string path, char c) : BaseClass(path, c) {};
 
+		Product* find_by_id(int id)
+		{
+			if (this->db.size() == 0)
+			{
+				return nullptr;
+			}
+
+			for (size_t i = 0; i < this->db.size(); i++)
+			{
+				if (this->db[i]->id == id)
+				{
+					return this->db[i];
+				}
+			}
+
+			return nullptr;
+		}
+
 	private:
 		Product* line_reader(std::vector<std::string> item)
 		{

@@ -20,6 +20,24 @@ namespace Databases {
 		Statements(std::string path) : BaseClass(path) {};
 		Statements(std::string path, char c) : BaseClass(path, c) {};
 
+		Statement* find_by_id(int id)
+		{
+			if (this->db.size() == 0)
+			{
+				return nullptr;
+			}
+
+			for (size_t i = 0; i < this->db.size(); i++)
+			{
+				if (this->db[i]->id == id)
+				{
+					return this->db[i];
+				}
+			}
+
+			return nullptr;
+		}
+
 	private:
 		Statement* line_reader(std::vector<std::string> item)
 		{

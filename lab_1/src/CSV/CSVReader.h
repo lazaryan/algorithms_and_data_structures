@@ -10,7 +10,7 @@
 #include "interfaces.h"
 
 namespace CSV {
-	template <typename T>
+	template <typename T, typename U = std::string>
 	class CSVReader : ICSVReader<T> {
 	public:
 		CSVReader(std::string path_to_file)
@@ -119,8 +119,10 @@ namespace CSV {
 			return this->db;
 		};
 
-	private:
+	protected:
 		std::vector<T*> db;
+
+	private:
 		std::ifstream file_stream;
 
 		char separator = ';';

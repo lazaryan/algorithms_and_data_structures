@@ -42,6 +42,9 @@ namespace CSV {
 
 		// функция для считвания всех строк сразу
 		virtual std::vector<T*> read_all() = 0;
+
+		// функция для получения элемента по его id
+		virtual T* find_by_id(int id) = 0;
 	private:
 		/*
 		 * функция обработки каждом считанной строки из csv файла

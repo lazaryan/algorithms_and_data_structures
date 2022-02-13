@@ -11,6 +11,7 @@ int main()
 	reader.read_all();
 
 	Databases::Product* item = reader[0];
+	Databases::Product* find_item = reader.find_by_id(2);
 
 	return 0;
 }
