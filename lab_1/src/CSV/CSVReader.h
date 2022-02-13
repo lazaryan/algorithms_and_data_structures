@@ -68,7 +68,7 @@ namespace CSV {
 			if (!this->file_stream.eof()) {
 				std::string line = "";
 
-				this->file_stream >> line;
+				std::getline(this->file_stream, line, '\n');
 
 				if (line.length() == 0)
 				{

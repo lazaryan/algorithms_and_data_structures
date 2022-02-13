@@ -11,17 +11,15 @@ namespace Databases {
 		std::string title;
 	};
 
-	typedef CSV::CSVReader<ProductType> BaseClass;
-
-	class ProductTypes : public BaseClass
+	class ProductTypes : public CSV::CSVReader<ProductType>
 	{
 	public:
-		ProductTypes(std::string path) : BaseClass(path) {};
-		ProductTypes(std::string path, char c) : BaseClass(path, c) {};
+		ProductTypes(std::string path) : CSV::CSVReader<ProductType>(path) {};
+		ProductTypes(std::string path, char c) : CSV::CSVReader<ProductType>(path, c) {};
 
 		ProductType* find_by_id(int id)
 		{
-			if (this->db.size() == 0)
+			if (this->db.empty())
 			{
 				return nullptr;
 			}

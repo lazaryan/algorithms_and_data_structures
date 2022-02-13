@@ -1,17 +1,26 @@
 #include <iostream>
 
-#include "Databases/Products.h"
+#include "ProductType/ProductType.h"
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-	Databases::Products reader = Databases::Products("./database/products.csv");
+	ProductType::ProductType type = ProductType::ProductType(
+		"./database/product_types.csv",
+		"./database/products.csv",
+		"./database/statements.csv"
+	);
 
-	reader.read_all();
+	for (int i = 0; i < 10; i++)
+	{
+		auto item = type.random(1);
 
-	Databases::Product* item = reader[0];
-	Databases::Product* find_item = reader.find_by_id(2);
+		if (item)
+		{
+			std::cout << "RANDOM: " << item->name << std::endl;
+		}
+	}
 
 	return 0;
 }

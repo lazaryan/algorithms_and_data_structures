@@ -4,7 +4,6 @@
 #include <iostream>
 #include <vector>
 #include <random>
-#include <math>
 
 namespace Random {
 	/*
@@ -56,6 +55,15 @@ namespace Random {
 			this->mersen_random_generator = std::mt19937(rd());
 		}
 
+		Random(std::vector<T> data, std::vector<double> statements)
+		{
+			std::random_device rd;
+
+			this->mersen_random_generator = std::mt19937(rd());
+
+			this->set_data(data, statements);
+		}
+
 		bool set_data(std::vector<T> data, std::vector<double> statements)
 		{
 			if (data.size() != statements.size())
@@ -82,9 +90,9 @@ namespace Random {
 				return nullptr;
 			}
 
-			const double random_value = double(this->mersen_random_generator()) / RAND_MAX;
+			const double random_value = double(this->mersen_random_generator()) / this->mersen_random_generator.max();
 
-			int statement = 0;
+			double statement = 0;
 
 			for (int i = 0; i < this->statements.size(); i++)
 			{
@@ -92,12 +100,18 @@ namespace Random {
 
 				if (random_value < statement)
 				{
-					return &this->statements[i];
+					T* item = &this->database[i];
+
+					return item;
 				}
 			}
 
-			return &this->statements.end();
+			T* item = &this->database[database.size() - 1];
+
+			return item;
 		}
+
+		size_t get_size_database() { return this->statements.size(); }
 
 	private:
 		bool is_load_data = false;
@@ -108,7 +122,7 @@ namespace Random {
 
 		std::vector<double> prepare_statements(std::vector<double> statements)
 		{
-			const double persentage = 0;
+			double persentage = 0;
 
 			for (std::vector<double>::iterator it = statements.begin(); it != statements.end(); ++it)
 			{
@@ -120,7 +134,7 @@ namespace Random {
 				return statements;
 			}
 
-			const double offset = std::pow(persentage, -1) * 0.1;
+			const double offset = std::pow(persentage, -1);
 
 			for (size_t i = 0; i < statements.size(); i++)
 			{

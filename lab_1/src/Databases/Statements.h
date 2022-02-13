@@ -12,17 +12,15 @@ namespace Databases {
 		double probability;
 	};
 
-	typedef CSV::CSVReader<Statement> BaseClass;
-
-	class Statements : public BaseClass
+	class Statements : public CSV::CSVReader<Statement>
 	{
 	public:
-		Statements(std::string path) : BaseClass(path) {};
-		Statements(std::string path, char c) : BaseClass(path, c) {};
+		Statements(std::string path) : CSV::CSVReader<Statement>(path) {};
+		Statements(std::string path, char c) : CSV::CSVReader<Statement>(path, c) {};
 
 		Statement* find_by_id(int id)
 		{
-			if (this->db.size() == 0)
+			if (this->db.empty())
 			{
 				return nullptr;
 			}
@@ -48,7 +46,7 @@ namespace Databases {
 			Statement* new_item = new Statement {
 				std::stoi(item[0]),
 				item[1],
-				std::atof(item[2].c_str()),
+				std::stod(item[2].c_str()),
 			};
 
 			return new_item;

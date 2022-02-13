@@ -14,17 +14,15 @@ namespace Databases {
 		double price;
 	};
 
-	typedef CSV::CSVReader<Product> BaseClass;
-
-	class Products : public BaseClass
+	class Products : public CSV::CSVReader<Product>
 	{
 	public:
-		Products(std::string path) : BaseClass(path) {};
-		Products(std::string path, char c) : BaseClass(path, c) {};
+		Products(std::string path) : CSV::CSVReader<Product>(path) {};
+		Products(std::string path, char c) : CSV::CSVReader<Product>(path, c) {};
 
 		Product* find_by_id(int id)
 		{
-			if (this->db.size() == 0)
+			if (this->db.empty())
 			{
 				return nullptr;
 			}
@@ -33,11 +31,26 @@ namespace Databases {
 			{
 				if (this->db[i]->id == id)
 				{
-					return this->db[i];
+					auto a=  this->db[i];
 				}
 			}
 
 			return nullptr;
+		}
+
+		std::vector<Product> find_by_product_type(int id)
+		{
+			std::vector<Product> list;
+
+			for (size_t i = 0; i < this->db.size(); i++)
+			{
+				if (this->db[i]->product_type_id == id)
+				{
+					list.push_back(*this->db[i]);
+				}
+			}
+
+			return list;
 		}
 
 	private:
