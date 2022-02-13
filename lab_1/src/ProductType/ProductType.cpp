@@ -1,4 +1,4 @@
-#include "ProductType.h"
+﻿#include "ProductType.h"
 
 namespace ProductType {
 	ProductType::ProductType(

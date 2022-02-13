@@ -1,4 +1,4 @@
-#ifndef __ProductType_ProductType__
+п»ї#ifndef __ProductType_ProductType__
 #define __ProductType_ProductType__
 
 #include <string>
@@ -13,7 +13,7 @@
 
 namespace ProductType {
 	/*
-	 * Класс для получения случайного продукта по его типу и работы с типами
+	 * РљР»Р°СЃСЃ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ СЃР»СѓС‡Р°Р№РЅРѕРіРѕ РїСЂРѕРґСѓРєС‚Р° РїРѕ РµРіРѕ С‚РёРїСѓ Рё СЂР°Р±РѕС‚С‹ СЃ С‚РёРїР°РјРё
 	 */
 	class ProductType {
 	public:
