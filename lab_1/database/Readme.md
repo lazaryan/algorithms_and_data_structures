@@ -4,8 +4,8 @@
 
 Таблица всех продуктов
 
-StatementId -> statements.csv[RowId]
-ProductTypeId -> product_types.csv[RowId]
+StatementId -> statements.csv\[RowId\]
+ProductTypeId -> product_types.csv\[RowId\]
 
 | RowId | ProductTypeId | ProductName | StatementId | Price  |
 | ----- | :-----------: | :----------:| :---------: | ------:|
@@ -28,3 +28,15 @@ ProductTypeId -> product_types.csv[RowId]
 | RowId | title  |
 | ----- | -----: |
 |  int  | string |
+
+## shopping.csv
+
+Список высказываний, какие продукты обычно с чем-то берут
+-1 означает, что берут "еще что-то"
+Все элементы идут через точку с запятой
+
+listProductTypeIds -> product_types.csv\[RowId\]\[\]
+
+| listProductTypeIds |
+| ------------------ |
+|      int[]         |

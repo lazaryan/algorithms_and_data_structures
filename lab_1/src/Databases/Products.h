@@ -32,7 +32,7 @@ namespace Databases {
 			{
 				if (this->db[i]->id == id)
 				{
-					auto a=  this->db[i];
+					return this->db[i];
 				}
 			}
 

@@ -1,26 +1,17 @@
 #include <iostream>
 
-#include "ProductType/ProductType.h"
+#include "Tree/Tree.h"
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 
-	ProductType::ProductType type = ProductType::ProductType(
+	Tree::Tree tree = Tree::Tree(
 		"./database/product_types.csv",
 		"./database/products.csv",
-		"./database/statements.csv"
+		"./database/statements.csv",
+		"./database/shopping.csv"
 	);
-
-	for (int i = 0; i < 10; i++)
-	{
-		auto item = type.random(1);
-
-		if (item)
-		{
-			std::cout << "RANDOM: " << item->name << std::endl;
-		}
-	}
 
 	return 0;
 }

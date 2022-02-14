@@ -17,6 +17,9 @@ add_executable(${PROJECT_NAME}
 	"src/Random/Random.h"
 	"src/ProductType/ProductType.h"
 	"src/ProductType/ProductType.cpp"
+	"src/Databases/Shopping.h"
+	"src/Tree/Tree.h"
+	"src/Tree/Tree.cpp"
 )
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
