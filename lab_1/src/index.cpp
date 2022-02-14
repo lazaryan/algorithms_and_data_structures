@@ -13,5 +13,7 @@ int main()
 		"./database/shopping.csv"
 	);
 
+	auto a = tree.generate_random_table(50);
+
 	return 0;
 }
