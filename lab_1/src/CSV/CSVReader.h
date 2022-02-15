@@ -10,7 +10,7 @@
 #include "interfaces.h"
 
 namespace CSV {
-	template <typename T, typename U = std::string>
+	template <typename T>
 	class CSVReader : ICSVReader<T> {
 	public:
 		CSVReader(std::string path_to_file)

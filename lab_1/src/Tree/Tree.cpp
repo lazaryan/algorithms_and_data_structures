@@ -26,12 +26,12 @@ namespace Tree {
 		);
 
 		this->randomize_in_the_basket = Random::Random<InTheBasket>(
-			std::vector<InTheBasket> { InTheBasket::Yeas, InTheBasket::No },
+			std::vector<InTheBasket> { InTheBasket::Yes, InTheBasket::No },
 			std::vector<double> { Tree::probability_of_adding, 1 - Tree::probability_of_adding }
 		);
 
 		this->randomize_in_the_add_abstract = Random::Random<InTheBasket>(
-			std::vector<InTheBasket> { InTheBasket::Yeas, InTheBasket::No },
+			std::vector<InTheBasket> { InTheBasket::Yes, InTheBasket::No },
 			std::vector<double> { Tree::probability_of_abstract_product, 1 - Tree::probability_of_abstract_product }
 		);
 
@@ -68,28 +68,31 @@ namespace Tree {
 
 			bool add_abstract_products = false;
 
-			for (std::vector<int>::iterator iter = shopping_list.begin(); iter != shopping_list.end(); iter++)
+			size_t shopping_list_length = shopping_list.size();
+
+			for (size_t j = 0; j < shopping_list_length; j++)
 			{
-				if (*iter == -1) {
+				if (shopping_list[j] == -1)
+				{
 					add_abstract_products = true;
 					continue;
 				}
 
-				t_listNodes::iterator it = this->nodes.find(*iter);
+				t_listNodes::iterator it = this->nodes.find(shopping_list[j]);
 
 				if (it == this->nodes.end())
 				{
 					continue;
 				}
 
-				for (std::vector<int>::iterator next_iter = ++iter; next_iter != shopping_list.end(); next_iter++)
+				for (int k = j + 1; k < shopping_list_length; k++)
 				{
-					if (*next_iter == -1)
+					if (shopping_list[k] == -1)
 					{
 						continue;
 					}
 
-					t_listNodes::iterator addon_iter = this->nodes.find(*next_iter);
+					t_listNodes::iterator addon_iter = this->nodes.find(shopping_list[k]);
 
 					if (addon_iter != this->nodes.end())
 					{
@@ -151,7 +154,7 @@ namespace Tree {
 
 			for (int i = 0; i < count_random; i++)
 			{
-				if (*this->randomize_in_the_add_abstract.random() == InTheBasket::Yeas)
+				if (*this->randomize_in_the_add_abstract.random() == InTheBasket::Yes)
 				{
 					Databases::ProductType random_product_type = *this->randomize_product_type.random();
 					Databases::Product random_product = *this->product_types->random(random_product_type.id);
@@ -174,6 +177,39 @@ namespace Tree {
 		}
 
 		return table;
+	}
+
+	Tree::t_receipts Tree::generate_random_receipts(int count)
+	{
+		Tree::t_receipts receipts;
+
+		std::vector<std::vector<Databases::Product>> lines = this->generate_random_table(count);
+		std::vector<Databases::Product*> products = this->product_types->get_products();
+
+		receipts.emplace("Price", std::vector<int>(count));
+		for (std::vector<Databases::Product*>::iterator it = products.begin(); it != products.end(); ++it)
+		{
+			receipts.emplace(std::to_string((**it).id), std::vector<int>(count));
+		}
+
+		for (int i = 0; i < count; i++)
+		{
+			std::vector<Databases::Product> product_list = lines[i];
+			size_t count_products = product_list.size();
+
+			for (int j = 0; j < count_products; j++)
+			{
+				Databases::Product product = product_list[j];
+
+				Tree::t_receipts::iterator product_line = receipts.find(std::to_string(product.id));
+				product_line->second[i] += 1;
+
+				Tree::t_receipts::iterator summ_line = receipts.find("Price");
+				summ_line->second[i] += product.price;
+			}
+		}
+
+		return receipts;
 	}
 
 	void Tree::recursive_generate_basket(std::vector<Databases::Product>* calculate, TreeNode node)

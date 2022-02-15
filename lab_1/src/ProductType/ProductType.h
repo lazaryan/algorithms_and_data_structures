@@ -26,6 +26,7 @@ namespace ProductType {
 		Databases::Product* random(int product_type_id);
 
 		std::vector<Databases::ProductType> get_product_types() { return this->product_types; }
+		std::vector<Databases::Product*> get_products() { return this->products; }
 	private:
 		typedef std::map<
 			int,
@@ -35,6 +36,7 @@ namespace ProductType {
 		t_sharedRandomMap random_map;
 
 		std::vector<Databases::ProductType> product_types;
+		std::vector<Databases::Product*> products;
 	};
 }
 

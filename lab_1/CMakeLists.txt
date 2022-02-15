@@ -10,6 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(${PROJECT_NAME} 
     "src/index.cpp"
 	"src/CSV/CSVReader.h"
+	"src/CSV/CSVWritter.h"
 	"src/CSV/interfaces.h"
 	"src/Databases/Products.h"
 	"src/Databases/Statements.h"

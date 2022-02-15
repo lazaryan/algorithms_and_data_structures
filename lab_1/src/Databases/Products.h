@@ -12,7 +12,7 @@ namespace Databases {
 		int product_type_id;
 		std::string name;
 		int statement_id;
-		double price;
+		int price;
 	};
 
 	class Products : public CSV::CSVReader<Product>
@@ -68,7 +68,7 @@ namespace Databases {
 				std::stoi(item[1]),
 				item[2],
 				std::stoi(item[3]),
-				std::stod(item[4].c_str()),
+				std::stoi(item[4]),
 			};
 
 			return new_item;

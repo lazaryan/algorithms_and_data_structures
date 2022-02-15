@@ -12,7 +12,7 @@
 
 namespace Tree {
 	enum class InTheBasket {
-		Yeas,
+		Yes,
 		No
 	};
 
@@ -24,7 +24,7 @@ namespace Tree {
 
 	class Tree {
 	public:
-		static constexpr const double probability_of_adding = 0.8f;
+		static constexpr const double probability_of_adding = 0.7f;
 		static constexpr const double probability_of_abstract_product = 0.4f;
 
 		Tree(
@@ -39,6 +39,10 @@ namespace Tree {
 		std::vector<Databases::Product> generate_random_line();
 
 		std::vector<std::vector<Databases::Product>> generate_random_table(int count);
+
+		typedef std::map<std::string, std::vector<int>> t_receipts;
+
+		t_receipts generate_random_receipts(int count);
 	private:
 		typedef std::map<
 			int,

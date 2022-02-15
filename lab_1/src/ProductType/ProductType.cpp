@@ -12,7 +12,7 @@ namespace ProductType {
 		Databases::Statements statements_bd = Databases::Statements(statements_bd_path);
 
 		product_types_bd.read_all();
-		products_bd.read_all();
+		this->products = products_bd.read_all();
 		statements_bd.read_all();
 
 		size_t cout_types = product_types_bd.size();

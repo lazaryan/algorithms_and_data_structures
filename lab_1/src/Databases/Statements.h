@@ -44,8 +44,6 @@ namespace Databases {
 				return nullptr;
 			}
 
-			std::replace(item[2].begin(), item[2].end(), '.', ',');
-
 			Statement* new_item = new Statement {
 				std::stoi(item[0]),
 				item[1],
