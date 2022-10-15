@@ -9,6 +9,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Add project files (personaly)
 add_executable(${PROJECT_NAME} 
     "src/index.cpp"
+	"src/CSV/CSVReader.h"
+	"src/CSV/CSVWritter.h"
+	"src/CSV/interfaces.h"
 )
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
