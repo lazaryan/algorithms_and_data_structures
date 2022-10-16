@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 
 #include "Databases/Movies.h"
 #include "Databases/Views.h"
@@ -30,8 +30,8 @@ int main()
 
 	Recomendation::movies_list_t recomendation_movies = recomendations.get_recomandet_movies(recomendet_count);
 
-	std::cout << "×èñëî ðåêîìåíäóåìûõ ôèëüìîâ: " << recomendet_count << std::endl << std::endl;
-	std::cout << "Ðåêîìåíäóåìûå ôèëüìû:" << std::endl;
+	std::cout << "Ð§Ð¸ÑÐ»Ð¾ Ñ€ÐµÐºÐ¾Ð¼ÐµÐ½Ð´ÑƒÐµÐ¼Ñ‹Ñ… Ñ„Ð¸Ð»ÑŒÐ¼Ð¾Ð²: " << recomendet_count << std::endl << std::endl;
+	std::cout << "Ð ÐµÐºÐ¾Ð¼ÐµÐ½Ð´ÑƒÐµÐ¼Ñ‹Ðµ Ñ„Ð¸Ð»ÑŒÐ¼Ñ‹:" << std::endl;
 	for (int i = 0; i < recomendet_count; i++)
 	{
 		std::cout << i + 1 << ") " << recomendation_movies[i]->name << std::endl;
