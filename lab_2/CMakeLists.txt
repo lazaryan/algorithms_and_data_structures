@@ -10,11 +10,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(${PROJECT_NAME} 
     "src/index.cpp"
 	"src/CSV/CSVReader.h"
-	"src/CSV/CSVWritter.h"
 	"src/CSV/interfaces.h"
 	"src/Databases/Movies.h"
 	"src/Databases/Views.h"
- )
+	"src/Recomendation/UserRecomendation.h"
+	"src/Recomendation/UserRecomendation.cpp"
+)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 

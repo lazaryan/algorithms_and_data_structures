@@ -37,6 +37,8 @@ namespace CSV {
 		// метод для принудительного закрытия файла
 		virtual void close_file() = 0;
 
+		virtual db_map_t<T*> get_data() = 0;
+
 		/*
 		 * Функция для считывания очередной строки из CSV файла
 		 * под капотом для каждой стоки вызывает метод line_reader для преобразования в нужную структуру
@@ -62,16 +64,6 @@ namespace CSV {
 		 * Функция для получения id элемента. Дальше по этому id можно будет вытащить элемент из хранилища
 		 */
 		virtual item_id_t get_item_id(T item) = 0;
-	};
-
-	class ICSVWriter {
-		// проверка, что удалось открыть файл
-		virtual bool is_open() const = 0;
-
-		// метод для принудительного закрытия файла
-		virtual void close_file() = 0;
-
-		virtual void write_line(std::vector<std::string> line) = 0;
 	};
 }
 

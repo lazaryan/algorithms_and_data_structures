@@ -49,6 +49,8 @@ namespace CSV {
 
 		bool is_reading_all() const { return !this->file_stream.is_open() || this->file_stream.eof(); }
 
+		db_map_t<T*> get_data() { return this->db; }
+
 		void close_file()
 		{
 			if (this->file_stream.is_open())
