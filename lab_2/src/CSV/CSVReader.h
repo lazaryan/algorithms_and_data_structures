@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include <istream>
 #include <fstream>
 #include <iostream>
@@ -15,14 +16,16 @@ namespace CSV {
 	public:
 		CSVReader(std::string path_to_file)
 		{
-			if (!this->init_file_stream(path_to_file)) {
+			if (!this->init_file_stream(path_to_file))
+			{
 				std::cerr << "ERROR::CSVReader => create class" << std::endl;
 			}
 		}
 
 		CSVReader(std::string path_to_file, char separator)
 		{
-			if (!this->init_file_stream(path_to_file)) {
+			if (!this->init_file_stream(path_to_file))
+			{
 				std::cerr << "ERROR::CSVReader => create class" << std::endl;
 			}
 
@@ -31,22 +34,13 @@ namespace CSV {
 
 		~CSVReader()
 		{
-			if (this->file_stream.is_open())
-			{
-				this->file_stream.close();
-			}
-
+			this->close_file();
 			this->db.clear();
 		}
 
-		T* operator[](std::size_t index)
+		T* operator[](CSV::item_id_t id)
 		{
-			if (index >= this->db.size())
-			{
-				return nullptr;
-			}
-
-			return this->db[index];
+			return this->db.count(id) ? this->db.at(id) : nullptr;
 		}
 
 		size_t size() const { return this->db.size(); }
@@ -65,52 +59,53 @@ namespace CSV {
 
 		T* next()
 		{
-			if (!this->file_stream.eof()) {
-				std::string line = "";
-
-				std::getline(this->file_stream, line, '\n');
-
-				if (line.length() == 0)
-				{
-					return nullptr;
-				}
-
-				size_t position_separator = 0;
-				std::string item;
-				std::vector<std::string> list;
-
-				while ((position_separator = line.find(this->separator)) != std::string::npos) {
-					item = line.substr(0, position_separator);
-					list.push_back(item);
-					line.erase(0, position_separator + 1);
-				}
-
-				if (line.length() != 0)
-				{
-					list.push_back(line);
-				}
-
-				T* new_item = this->line_reader(list);
-
-				if (new_item == NULL)
-				{
-					std::cerr << "ERROR::CSVReader => error creating new item" << std::endl;
-
-					return nullptr;
-				}
-
-				this->db.push_back(new_item);
-
-				return new_item;
-			}
-			else {
-				std::cerr << "ERROR::CSVReader => reading empty after eof" << std::endl;
-
+			if (this->file_stream.eof())
+			{
 				return nullptr;
 			}
-		};
+			
+			std::string line = "";
+			std::getline(this->file_stream, line, '\n');
 
-		std::vector<T*> read_all() {
+			if (line.length() == 0)
+			{
+				return nullptr;
+			}
+
+			size_t position_separator = 0;
+			std::string item;
+			std::vector<std::string> list;
+
+			while ((position_separator = line.find(this->separator)) != std::string::npos) {
+				item = line.substr(0, position_separator);
+				list.push_back(item);
+				line.erase(0, position_separator + 1);
+			}
+
+			if (line.length() != 0)
+			{
+				list.push_back(line);
+			}
+
+			T* new_item = this->line_reader(list);
+
+			if (new_item == NULL)
+			{
+				std::cerr << "ERROR::CSVReader => error creating new item" << std::endl;
+				return nullptr;
+			}
+
+			if (this->filter_saving(*new_item))
+			{
+				this->db.emplace(this->get_item_id(*new_item), new_item);
+				return new_item;
+			}
+
+			return nullptr;
+		}
+
+		CSV::db_map_t<T*> read_all()
+		{
 			while (!this->file_stream.eof())
 			{
 				this->next();
@@ -120,16 +115,18 @@ namespace CSV {
 		};
 
 	protected:
-		std::vector<T*> db;
+		CSV::db_map_t<T*> db;
 
 	private:
 		std::ifstream file_stream;
+		char separator = ';';
 
-		char separator = ',';
+		virtual T* line_reader(std::vector<std::string> item) { return new T{}; }
+		virtual bool filter_saving(T item) { return true; }
+		virtual item_id_t get_item_id(T item) { return 0; }
 
-		virtual T* line_reader(std::vector<std::string> item) { return new T{}; };
-
-		bool init_file_stream(std::string path_to_file) {
+		bool init_file_stream(std::string path_to_file)
+		{
 			this->file_stream = std::ifstream(path_to_file);
 
 			if (!this->file_stream.is_open())
