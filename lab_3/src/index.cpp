@@ -35,29 +35,17 @@ bool read_result(std::string line, Databases::Graph* graph, CSV::item_id_t root_
 	{
 		int c = line[i] - '0';
 
-		if (c == 0)
+		std::string type = c == 0 ? active_node->left_type : active_node->right_type;
+		int value = c == 0 ? active_node->left_value : active_node->right_value;
+
+		if (type == "v")
 		{
-			if (active_node->left_type == "v")
-			{
-				*result = active_node->left_value;
-				return true;
-			}
-			else
-			{
-				active_node = (*graph)[active_node->left_value];
-			}
+			*result = value;
+			return true;
 		}
 		else
 		{
-			if (active_node->right_type == "v")
-			{
-				*result = active_node->right_value;
-				return true;
-			}
-			else
-			{
-				active_node = (*graph)[active_node->right_value];
-			}
+			active_node = (*graph)[value];
 		}
 	}
 
